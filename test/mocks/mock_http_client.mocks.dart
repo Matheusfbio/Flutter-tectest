@@ -2,80 +2,73 @@
 // in flutter_tectest/test/mocks/mock_http_client.dart.
 // Do not manually edit this file.
 
-// ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
-import 'dart:convert' as _i4;
-import 'dart:typed_data' as _i6;
+// Importações com alias para evitar conflito de nomes
+import 'dart:async' as i3; // Para Future e operações assíncronas
+import 'dart:convert' as i4; // Para codificação (Encoding)
+import 'dart:typed_data' as i6; // Para Uint8List usado em leitura de bytes
 
-import 'package:http/http.dart' as _i2;
-import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i5;
+import 'package:http/http.dart' as i2; // Cliente HTTP original
+import 'package:mockito/mockito.dart' as i1; // Mockito para criação de mocks
+import 'package:mockito/src/dummies.dart'
+    as i5; // Valores dummy usados internamente
 
-// ignore_for_file: type=lint
-// ignore_for_file: avoid_redundant_argument_values
-// ignore_for_file: avoid_setters_without_getters
-// ignore_for_file: comment_references
-// ignore_for_file: deprecated_member_use
-// ignore_for_file: deprecated_member_use_from_same_package
-// ignore_for_file: implementation_imports
-// ignore_for_file: invalid_use_of_visible_for_testing_member
-// ignore_for_file: must_be_immutable
-// ignore_for_file: prefer_const_constructors
-// ignore_for_file: unnecessary_parenthesis
-// ignore_for_file: camel_case_types
-// ignore_for_file: subtype_of_sealed_class
+// Avisos para ignorar certas regras do analisador Dart (lint)
 
-class _FakeResponse_0 extends _i1.SmartFake implements _i2.Response {
-  _FakeResponse_0(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
+// Classe Fake que simula uma resposta HTTP normal
+class _FakeResponse_0 extends i1.SmartFake implements i2.Response {
+  _FakeResponse_0(super.parent, super.parentInvocation);
 }
 
-class _FakeStreamedResponse_1 extends _i1.SmartFake
-    implements _i2.StreamedResponse {
-  _FakeStreamedResponse_1(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
+// Classe Fake que simula uma resposta HTTP transmitida (streamed)
+class _FakeStreamedResponse_1 extends i1.SmartFake
+    implements i2.StreamedResponse {
+  _FakeStreamedResponse_1(super.parent, super.parentInvocation);
 }
 
-/// A class which mocks [Client].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockClient extends _i1.Mock implements _i2.Client {
+/// Classe mock do `http.Client` que é a implementação do cliente HTTP.
+/// Usada para testes para simular chamadas HTTP sem fazer requisições reais.
+class MockClient extends i1.Mock implements i2.Client {
+  // Construtor: habilita erro quando um método não stubado é chamado
   MockClient() {
-    _i1.throwOnMissingStub(this);
+    i1.throwOnMissingStub(this);
   }
 
+  // Sobrescreve o método HTTP HEAD
   @override
-  _i3.Future<_i2.Response> head(Uri? url, {Map<String, String>? headers}) =>
+  i3.Future<i2.Response> head(Uri? url, {Map<String, String>? headers}) =>
       (super.noSuchMethod(
             Invocation.method(#head, [url], {#headers: headers}),
-            returnValue: _i3.Future<_i2.Response>.value(
+            // Retorna um Future com FakeResponse para simular retorno
+            returnValue: i3.Future<i2.Response>.value(
               _FakeResponse_0(
                 this,
                 Invocation.method(#head, [url], {#headers: headers}),
               ),
             ),
           )
-          as _i3.Future<_i2.Response>);
+          as i3.Future<i2.Response>);
 
+  // Sobrescreve o método HTTP GET
   @override
-  _i3.Future<_i2.Response> get(Uri? url, {Map<String, String>? headers}) =>
+  i3.Future<i2.Response> get(Uri? url, {Map<String, String>? headers}) =>
       (super.noSuchMethod(
             Invocation.method(#get, [url], {#headers: headers}),
-            returnValue: _i3.Future<_i2.Response>.value(
+            returnValue: i3.Future<i2.Response>.value(
               _FakeResponse_0(
                 this,
                 Invocation.method(#get, [url], {#headers: headers}),
               ),
             ),
           )
-          as _i3.Future<_i2.Response>);
+          as i3.Future<i2.Response>);
 
+  // Sobrescreve o método HTTP POST
   @override
-  _i3.Future<_i2.Response> post(
+  i3.Future<i2.Response> post(
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i4.Encoding? encoding,
+    i4.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
             Invocation.method(
@@ -83,7 +76,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
               [url],
               {#headers: headers, #body: body, #encoding: encoding},
             ),
-            returnValue: _i3.Future<_i2.Response>.value(
+            returnValue: i3.Future<i2.Response>.value(
               _FakeResponse_0(
                 this,
                 Invocation.method(
@@ -94,14 +87,15 @@ class MockClient extends _i1.Mock implements _i2.Client {
               ),
             ),
           )
-          as _i3.Future<_i2.Response>);
+          as i3.Future<i2.Response>);
 
+  // Sobrescreve o método HTTP PUT
   @override
-  _i3.Future<_i2.Response> put(
+  i3.Future<i2.Response> put(
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i4.Encoding? encoding,
+    i4.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
             Invocation.method(
@@ -109,7 +103,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
               [url],
               {#headers: headers, #body: body, #encoding: encoding},
             ),
-            returnValue: _i3.Future<_i2.Response>.value(
+            returnValue: i3.Future<i2.Response>.value(
               _FakeResponse_0(
                 this,
                 Invocation.method(
@@ -120,14 +114,15 @@ class MockClient extends _i1.Mock implements _i2.Client {
               ),
             ),
           )
-          as _i3.Future<_i2.Response>);
+          as i3.Future<i2.Response>);
 
+  // Sobrescreve o método HTTP PATCH
   @override
-  _i3.Future<_i2.Response> patch(
+  i3.Future<i2.Response> patch(
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i4.Encoding? encoding,
+    i4.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
             Invocation.method(
@@ -135,7 +130,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
               [url],
               {#headers: headers, #body: body, #encoding: encoding},
             ),
-            returnValue: _i3.Future<_i2.Response>.value(
+            returnValue: i3.Future<i2.Response>.value(
               _FakeResponse_0(
                 this,
                 Invocation.method(
@@ -146,14 +141,15 @@ class MockClient extends _i1.Mock implements _i2.Client {
               ),
             ),
           )
-          as _i3.Future<_i2.Response>);
+          as i3.Future<i2.Response>);
 
+  // Sobrescreve o método HTTP DELETE
   @override
-  _i3.Future<_i2.Response> delete(
+  i3.Future<i2.Response> delete(
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i4.Encoding? encoding,
+    i4.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
             Invocation.method(
@@ -161,7 +157,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
               [url],
               {#headers: headers, #body: body, #encoding: encoding},
             ),
-            returnValue: _i3.Future<_i2.Response>.value(
+            returnValue: i3.Future<i2.Response>.value(
               _FakeResponse_0(
                 this,
                 Invocation.method(
@@ -172,45 +168,49 @@ class MockClient extends _i1.Mock implements _i2.Client {
               ),
             ),
           )
-          as _i3.Future<_i2.Response>);
+          as i3.Future<i2.Response>);
 
+  // Sobrescreve o método read que retorna o corpo da resposta como String
   @override
-  _i3.Future<String> read(Uri? url, {Map<String, String>? headers}) =>
+  i3.Future<String> read(Uri? url, {Map<String, String>? headers}) =>
       (super.noSuchMethod(
             Invocation.method(#read, [url], {#headers: headers}),
-            returnValue: _i3.Future<String>.value(
-              _i5.dummyValue<String>(
+            // Retorna um valor dummy de String para evitar erros
+            returnValue: i3.Future<String>.value(
+              i5.dummyValue<String>(
                 this,
                 Invocation.method(#read, [url], {#headers: headers}),
               ),
             ),
           )
-          as _i3.Future<String>);
+          as i3.Future<String>);
 
+  // Sobrescreve o método readBytes que retorna o corpo da resposta em bytes
   @override
-  _i3.Future<_i6.Uint8List> readBytes(
-    Uri? url, {
-    Map<String, String>? headers,
-  }) =>
+  i3.Future<i6.Uint8List> readBytes(Uri? url, {Map<String, String>? headers}) =>
       (super.noSuchMethod(
             Invocation.method(#readBytes, [url], {#headers: headers}),
-            returnValue: _i3.Future<_i6.Uint8List>.value(_i6.Uint8List(0)),
+            // Retorna lista vazia de bytes dummy
+            returnValue: i3.Future<i6.Uint8List>.value(i6.Uint8List(0)),
           )
-          as _i3.Future<_i6.Uint8List>);
+          as i3.Future<i6.Uint8List>);
 
+  // Sobrescreve o método send que envia uma requisição HTTP
   @override
-  _i3.Future<_i2.StreamedResponse> send(_i2.BaseRequest? request) =>
+  i3.Future<i2.StreamedResponse> send(i2.BaseRequest? request) =>
       (super.noSuchMethod(
             Invocation.method(#send, [request]),
-            returnValue: _i3.Future<_i2.StreamedResponse>.value(
+            // Retorna uma resposta transmitida fake
+            returnValue: i3.Future<i2.StreamedResponse>.value(
               _FakeStreamedResponse_1(
                 this,
                 Invocation.method(#send, [request]),
               ),
             ),
           )
-          as _i3.Future<_i2.StreamedResponse>);
+          as i3.Future<i2.StreamedResponse>);
 
+  // Sobrescreve o método close para fechar o cliente HTTP
   @override
   void close() => super.noSuchMethod(
     Invocation.method(#close, []),

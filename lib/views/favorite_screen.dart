@@ -1,15 +1,19 @@
+// Importações necessárias
 import 'package:flutter/material.dart';
 import 'package:flutter_tectest/provider/favorite_provider.dart';
 import 'package:flutter_tectest/views/post_details_screen.dart';
 import 'package:provider/provider.dart';
 
+// Componente de tela para exibir os posts favoritos
 class FavoriteScreen extends StatelessWidget {
+  // Lista de favoritos passada como parâmetro
   final List<Map<String, dynamic>> favorites;
 
   const FavoriteScreen({super.key, required this.favorites});
 
   @override
   Widget build(BuildContext context) {
+    // Acesso ao provider de favoritos para manipulação (remover, etc.)
     final favoriteProvider = Provider.of<FavoriteProvider>(context);
 
     return Scaffold(
@@ -19,6 +23,7 @@ class FavoriteScreen extends StatelessWidget {
         backgroundColor: Colors.blue,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
+      // Verifica se a lista de favoritos está vazia
       body:
           favorites.isEmpty
               ? const Center(child: Text('Nenhum post favoritado.'))
@@ -29,7 +34,9 @@ class FavoriteScreen extends StatelessWidget {
                   final post = favorites[index];
                   final title = post['title'] ?? 'Sem título';
                   final body = post['body'] ?? 'Sem conteúdo';
+
                   return GestureDetector(
+                    // Ao tocar no card, navega para a tela de detalhes
                     onTap: () {
                       Navigator.push(
                         context,
@@ -49,6 +56,7 @@ class FavoriteScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            // Linha com o título e botão de excluir
                             Row(
                               children: [
                                 Expanded(
@@ -61,13 +69,17 @@ class FavoriteScreen extends StatelessWidget {
                                     ),
                                   ),
                                 ),
+                                // Botão de deletar o post dos favoritos
                                 IconButton(
                                   icon: const Icon(
                                     Icons.delete,
                                     color: Colors.grey,
                                   ),
                                   onPressed: () {
+                                    // Remove o post dos favoritos
                                     favoriteProvider.toggleFavorite(post);
+
+                                    // Exibe um feedback visual (snackbar)
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content: const Text(
@@ -89,6 +101,7 @@ class FavoriteScreen extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(height: 12),
+                            // Exibição do corpo do post (limite de 3 linhas)
                             Text(
                               body,
                               maxLines: 3,

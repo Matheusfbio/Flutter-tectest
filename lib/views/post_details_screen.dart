@@ -1,7 +1,9 @@
+// Importações de pacotes essenciais do Flutter e do Provider
 import 'package:flutter/material.dart';
 import 'package:flutter_tectest/provider/favorite_provider.dart';
 import 'package:provider/provider.dart';
 
+// Tela de detalhes do post (recebe um post como parâmetro)
 class PostDetailScreen extends StatefulWidget {
   final Map<String, dynamic> post;
 
@@ -12,18 +14,24 @@ class PostDetailScreen extends StatefulWidget {
 }
 
 class _PostDetailScreenState extends State<PostDetailScreen> {
-  // bool isFavorited = false;
+  // O controle de favoritos foi movido para o Provider, então o estado local (bool isFavorited) foi comentado/descartado
 
   @override
   Widget build(BuildContext context) {
     final post = widget.post;
+
+    // Extração segura dos dados do post
     final title = post['title'] ?? 'Sem título';
     final body = post['body'] ?? 'Sem conteúdo';
     final tags = (post['tags'] as List?)?.join(', ') ?? 'Sem tags';
+
+    // Acesso ao Provider de favoritos (sem ouvir atualizações automáticas aqui)
     final favoriteProvider = Provider.of<FavoriteProvider>(
       context,
       listen: false,
     );
+
+    // Verifica se o post está nos favoritos
     final isFavorite = favoriteProvider.isFavorite(post);
 
     return Scaffold(
@@ -45,10 +53,11 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Agrupamento de título, botão favorito, corpo, tags e reações
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Título e Favorito
+                    // Linha com título e botão de favorito
                     Row(
                       children: [
                         Expanded(
@@ -68,6 +77,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                           ),
                           onPressed: () {
                             setState(() {
+                              // Adiciona ou remove o post dos favoritos
                               favoriteProvider.toggleFavorite(post);
                             });
                           },
@@ -76,14 +86,14 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                     ),
                     const SizedBox(height: 20),
 
-                    // Corpo
+                    // Exibição do corpo do post
                     Text(
                       body,
                       style: const TextStyle(fontSize: 16, height: 1.5),
                     ),
                     const SizedBox(height: 30),
 
-                    // Tags
+                    // Exibição das tags
                     Row(
                       children: [
                         const Icon(Icons.label_outline, color: Colors.grey),
@@ -98,7 +108,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                     ),
                     const SizedBox(height: 12),
 
-                    // Reações
+                    // Exibição das reações (likes e dislikes)
                     Row(
                       children: [
                         const Icon(Icons.favorite_border, color: Colors.grey),
