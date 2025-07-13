@@ -2,6 +2,12 @@
 
 Aplicativo Flutter para exibição, detalhamento e gerenciamento de favoritos de posts utilizando uma API pública.
 
+
+
+https://github.com/user-attachments/assets/ac42badc-2788-459d-8a3a-9555eb654980
+
+
+
 ## Visão Geral
 
 Este projeto foi desenvolvido com o objetivo de demonstrar boas práticas em Flutter, incluindo gerenciamento de estado, persistência local e consumo de APIs REST. O app permite listar posts, visualizar detalhes e favoritar/desfavoritar itens, com persistência dos favoritos.
