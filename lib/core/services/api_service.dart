@@ -4,6 +4,10 @@ import 'package:http/http.dart' as http;
 class ApiService {
   static const String baseUrl = "https://dummyjson.com";
 
+  final http.Client client;
+
+  ApiService({http.Client? client}) : client = client ?? http.Client();
+
   Future<List<dynamic>> fetchPosts() async {
     final url = Uri.parse('$baseUrl/posts');
     final response = await http.get(url);

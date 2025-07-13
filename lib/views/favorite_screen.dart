@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tectest/provider/favorite_provider.dart';
 import 'package:flutter_tectest/views/post_details_screen.dart';
+import 'package:provider/provider.dart';
 
 class FavoriteScreen extends StatelessWidget {
   final List<Map<String, dynamic>> favorites;
@@ -8,11 +10,14 @@ class FavoriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final favoriteProvider = Provider.of<FavoriteProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favoritos', style: TextStyle(color: Colors.white)),
         centerTitle: true,
         backgroundColor: Colors.blue,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body:
           favorites.isEmpty
@@ -24,9 +29,6 @@ class FavoriteScreen extends StatelessWidget {
                   final post = favorites[index];
                   final title = post['title'] ?? 'Sem título';
                   final body = post['body'] ?? 'Sem conteúdo';
-                  final reactions =
-                      post['reactions'] ?? {'likes': 0, 'dislikes': 0};
-
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -47,13 +49,44 @@ class FavoriteScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              title,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blueAccent,
-                              ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    title,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blueAccent,
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Colors.grey,
+                                  ),
+                                  onPressed: () {
+                                    favoriteProvider.toggleFavorite(post);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: const Text(
+                                          'Post removido dos favoritos',
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        backgroundColor: Colors.white,
+                                        behavior: SnackBarBehavior.floating,
+                                        duration: const Duration(seconds: 2),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
                             ),
                             const SizedBox(height: 12),
                             Text(
